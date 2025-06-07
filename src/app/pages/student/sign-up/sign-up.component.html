@@ -1,0 +1,307 @@
+<!-- <div class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
+      <h2 class="text-2xl font-bold mb-6 text-center">Student Signup</h2>
+      <form class="space-y-4">
+        <input type="text" placeholder="Full Name" class="w-full p-3 border rounded-md" />
+        <input type="email" placeholder="Email" class="w-full p-3 border rounded-md" />
+        <input type="password" placeholder="Password" class="w-full p-3 border rounded-md" />
+        <button class="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700">Sign Up</button>
+        <p class="text-sm text-center mt-4">Already have an account? <a href="login.html" class="text-blue-600">Login</a></p>
+      </form>
+    </div>
+</div> -->
+
+<div class="bg-gray-100 flex items-center justify-center sm:p-10 md:h-screen">
+  <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-xl">
+    <h2 class="text-2xl text-blue-600 font-bold mb-6 text-center">
+      Student Signup
+    </h2>
+
+    <form [formGroup]="studentSignUpForm" (ngSubmit)="onSignUp()">
+      <div class="grid gap-6 mb-6 md:grid-cols-2">
+        <div>
+          <label
+            for="first_name"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >First name</label
+          >
+          <input
+            type="text"
+            id="first_name"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="John"
+            formControlName="fname"
+          />
+          @if (studentSignUpForm.get('fname') && studentSignUpForm.get('fname')?.invalid && (studentSignUpForm.get('fname')?.dirty || studentSignUpForm.get('fname')?.touched)) {
+            @if (studentSignUpForm.get('fname')?.errors?.['required']) {
+                <p class="text-red-500">This field is required</p>
+            }
+        }
+        </div>
+        <div>
+          <label
+            for="last_name"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Last name</label
+          >
+          <input
+            type="text"
+            id="last_name"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Doe"
+            formControlName="lname"
+          />
+          @if (studentSignUpForm.get('lname') && studentSignUpForm.get('lname')?.invalid && (studentSignUpForm.get('lname')?.dirty || studentSignUpForm.get('lname')?.touched)) {
+            @if (studentSignUpForm.get('lname')?.errors?.['required']) {
+                <p class="text-red-500">This field is required</p>
+            }
+        }
+        </div>
+        <div class="mb-">
+          <label
+            for="email"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Email address</label
+          >
+          <input
+            type="email"
+            id="email"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="john.doe@company.com"
+            formControlName="email"
+          />
+          @if (emailIsValid) {
+            @if (studentSignUpForm.get('email')?.errors?.['required']) {
+                <p class="text-red-500">This field is required</p>
+            }
+            @if (studentSignUpForm.get('email')?.errors?.['email']) {
+                <label
+                  for="email"
+                  class="block mb-2 text-sm font-medium text-red-500 dark:text-white"
+                  >Please enter a valid email address</label
+                >
+
+            }
+          }
+        </div>
+        <div class="mb-">
+          <label
+            for="gender"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Gender</label
+          >
+          <select
+            name=""
+            id="gender"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            formControlName="gender"
+          >
+            <option value="Select Gender">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+
+        <div>
+          <label
+            for="dob"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Date of Birth</label
+          >
+          <input
+            type="date"
+            name=""
+            id="dob"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            formControlName="dob"
+          />
+        </div>
+        <div>
+          <label
+            for="phone"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Phone number</label
+          >
+          <input
+            type="number"
+            id="phone"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="123-45-678"
+            formControlName="phone"
+          />
+        </div>
+        <div>
+          <label
+            for="class"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Class</label
+          >
+          <select
+            name=""
+            id="class"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            formControlName="class"
+            (change)="onSelectClass()"
+          >
+            <option value="">None</option>
+            <option value="JSS1">JSS1</option>
+            <option value="JSS2">JSS2</option>
+            <option value="JSS3">JSS3</option>
+            <option value="SSS1">SSS1</option>
+            <option value="SSS2">SSS2</option>
+            <option value="SSS3">SSS3</option>
+          </select>
+        </div>
+
+        @if(showOption){
+        <div>
+          <label
+            for="option"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Option</label
+          >
+          <select
+            name=""
+            id="option"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            formControlName="option"
+          >
+            <option value="">Select your option</option>
+            <option value="SCIENCE">SCIENCE</option>
+            <option value="COMMERCIAL">COMMERCIAL</option>
+            <option value="ART">ART</option>
+          </select>
+        </div>
+
+        }
+
+        <div class="mb-">
+            <label
+              for="guardian_email"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Guardian Email address</label
+            >
+            <input
+              type="email"
+              id="guardian_email"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="john.doe@company.com"
+              formControlName="guardian_email"
+            />
+            @if (studentSignUpForm.get('guardian_email') && studentSignUpForm.get('guardian_email')?.invalid && (studentSignUpForm.get('guardian_email')?.dirty || studentSignUpForm.get('guardian_email')?.touched)) {
+                @if (studentSignUpForm.get('guardian_email')?.errors?.['required']) {
+                    <p class="text-red-500">This field is required</p>
+                }
+                @if (studentSignUpForm.get('guardian_email')?.errors?.['email']) {
+                    <p class="text-red-500">Please enter a valid email address</p>
+                }
+            }
+          </div>
+      </div>
+
+      <div formGroupName="passwords">
+        <div class="mb-6">
+          <label
+            for="password"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Password</label
+          >
+          <input
+            type="password"
+            id="password"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="•••••••••"
+            formControlName="password"
+          />
+          <!-- @if (!passwordControl?.invalid || !passwordControl?.dirty || !passwordControl?.touched) {
+                    <label for="password" class="block mb-2 text-sm font-medium text-red-500 dark:text-white">Please enter a valid password (Must be atleat 4 characters long and must contain atleast one special character.)</label>
+                } -->
+          <div
+            *ngIf="
+              passwordControl &&
+              passwordControl.invalid &&
+              (passwordControl.dirty || passwordControl.touched)
+            "
+          >
+            <p
+              *ngIf="passwordControl.errors?.['required']"
+              class="text-red-500"
+            >
+              Password is required.
+            </p>
+            <p
+              *ngIf="passwordControl.errors?.['minlength']"
+              class="text-red-500"
+            >
+              Password must be at least 4 characters.
+            </p>
+            <p
+              *ngIf="passwordControl.errors?.['mustContainSpecialCharacter']"
+              class="text-red-500"
+            >
+              Password must contain at least one special character.
+            </p>
+          </div>
+        </div>
+        <div class="mb-6">
+          <label
+            for="confirm_password"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Confirm password</label
+          >
+          <input
+            type="password"
+            id="confirm_password"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="•••••••••"
+            formControlName="confirmpassword"
+          />
+
+          <div *ngIf="passwordMismatch">
+            <p class="text-red-500">
+              Confirm Password do not match with Password.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-start mb-6">
+        <div class="flex items-center h-5">
+          <input
+            id="remember"
+            type="checkbox"
+            value=""
+            class="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+            formControlName="checkbox"
+          />
+        </div>
+        <label
+          for="remember"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >I agree with the
+          <a
+            routerLink="./"
+            class="text-blue-600 hover:underline dark:text-blue-500"
+            >terms and conditions</a
+          >.</label
+        >
+      </div>
+      <button
+        type="submit"
+        [disabled]="studentSignUpForm.invalid"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      >
+        Submit
+      </button>
+
+      <p class="mt-4 text-gray-600 text-sm">
+        Already have an account?
+        <a routerLink="/student/signin" class="text-blue-500">Log in here</a>
+      </p>
+
+      @if (studentSignUpForm.invalid && studentSignUpForm.dirty && studentSignUpForm.touched) {
+        <p class="text-red-300">Please, check your form to make sure all the required input are been filled</p>
+        
+    }
+    </form>
+  </div>
+</div>

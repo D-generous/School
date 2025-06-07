@@ -1,0 +1,185 @@
+
+<div class="bg-gray-100 flex items-center justify-center sm:p-10 md:h-screen">
+    <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-xl">
+      <h2 class="text-2xl text-blue-600 font-bold mb-6 text-center">
+        Parent Signup
+      </h2>
+  
+      <form [formGroup]="parentSignUpForm" (ngSubmit)="onSignUp()">
+        <div class="grid gap-6 mb-6 md:grid-cols-2">
+          <div>
+            <label
+              for="first_name"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >First name</label
+            >
+            <input
+              type="text"
+              id="first_name"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="John"
+              formControlName="fname"
+            />
+            @if (parentSignUpForm.get('fname') && parentSignUpForm.get('fname')?.invalid && (parentSignUpForm.get('fname')?.dirty || parentSignUpForm.get('fname')?.touched)) {
+                @if (parentSignUpForm.get('fname')?.errors?.['required']) {
+                    <p class="text-red-500">This field is required</p>
+                }
+            }
+          </div>
+          <div>
+            <label
+              for="last_name"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Last name</label
+            >
+            <input
+              type="text"
+              id="last_name"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Doe"
+              formControlName="lname"
+            />
+            @if (parentSignUpForm.get('lname') && parentSignUpForm.get('lname')?.invalid && (parentSignUpForm.get('lname')?.dirty || parentSignUpForm.get('lname')?.touched)) {
+                @if (parentSignUpForm.get('lname')?.errors?.['required']) {
+                    <p class="text-red-500">This field is required</p>
+                }
+            }
+          </div>
+          <div class="mb-">
+            <label
+              for="email"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Email address</label
+            >
+            <input
+              type="email"
+              id="email"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="john.doe@company.com"
+              formControlName="email"
+            />
+            @if (parentSignUpForm.get('email') && parentSignUpForm.get('email')?.invalid && (parentSignUpForm.get('email')?.dirty || parentSignUpForm.get('email')?.touched)) {
+                @if (parentSignUpForm.get('email')?.errors?.['required']) {
+                    <p class="text-red-500">This field is required</p>
+                }
+                @if (parentSignUpForm.get('email')?.errors?.['email']) {
+                    <p class="text-red-500">Please enter a valid email address</p>
+                }
+            }
+           
+          </div>
+          
+  
+          
+          <div>
+            <label
+              for="phone"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Phone number</label
+            >
+            <input
+              type="number"
+              id="phone"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="123-45-678"
+              formControlName="phone"
+            />
+          </div>
+  
+          
+  
+
+        </div>
+  
+        <div formGroupName="passwords">
+          <div class="mb-6">
+            <label
+              for="password"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Password</label
+            >
+            <input
+              type="password"
+              id="password"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="•••••••••"
+              formControlName="password"
+            />
+
+            @if (passwordValid && passwordValid.invalid && (passwordValid.dirty || passwordValid.touched) ) {
+                @if (passwordValid.errors?.['required']) {
+                    <p class="text-red-500"> This field is required</p>
+                }
+                @if (passwordValid.errors?.['minlength']) {
+                    <p class="text-red-500">Password must be at least 4 characters.</p>
+                }
+                @if (passwordValid.errors?.['mustContainSpecialCharacter']) {
+                    <p class="text-red-500">Password must contain atleast one special character</p>
+                }
+            }
+
+
+           
+          </div>
+          <div class="mb-6">
+            <label
+              for="confirm_password"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Confirm password</label
+            >
+            <input
+              type="password"
+              id="confirm_password"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="•••••••••"
+              formControlName="confirmpassword"
+            />
+
+            @if (passwordMismatch) {
+                <p class="text-red-500">Confirm Password does not match with Password</p>
+            }
+
+          </div>
+        </div>
+        <div class="flex items-start mb-6">
+          <div class="flex items-center h-5">
+            <input
+              id="remember"
+              type="checkbox"
+              value=""
+              class="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+              formControlName="checkbox"
+            />
+          </div>
+          <label
+            for="remember"
+            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >I agree with the
+            <a
+              routerLink="./"
+              class="text-blue-600 hover:underline dark:text-blue-500"
+              >terms and conditions</a
+            >.</label
+          >
+        </div>
+        <button
+          type="submit"
+          [disabled]="parentSignUpForm.invalid"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Submit
+        </button>
+  
+        <p class="mt-4 text-gray-600 text-sm">
+          Already have an account?
+          <a routerLink="/student/signin" class="text-blue-500">Log in here</a>
+        </p>
+
+        @if (parentSignUpForm.invalid && parentSignUpForm.dirty && parentSignUpForm.touched) {
+            <p class="text-red-300">Please, check your form to make sure all the required input are been filled</p>
+            
+        }
+      </form>
+    </div>
+  </div>
+  

@@ -1,0 +1,54 @@
+<nav class="bg-white border-b shadow-md fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo -->
+        <div class="flex-shrink-0">
+          <a href="/" class="text-2xl font-bold text-blue-600">SchoolName</a>
+        </div>
+  
+        <!-- Toggle button for mobile -->
+        <div class="md:hidden">
+          <button (click)="toggleMenu()" class="text-gray-800 focus:outline-none">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path [attr.d]="menuOpen 
+                ? 'M6 18L18 6M6 6l12 12' 
+                : 'M4 6h16M4 12h16M4 18h16'" 
+                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            </svg>
+          </button>
+        </div>
+  
+        <!-- Links (hidden on mobile) -->
+        <div class="hidden md:flex space-x-8">
+          <a href="#" class="hover:text-blue-600">Home</a>
+          <a href="#" class="hover:text-blue-600">About</a>
+          <a href="#" class="hover:text-blue-600">Academics</a>
+          <a href="#" class="hover:text-blue-600">Admissions</a>
+          <a href="#" class="hover:text-blue-600">Faculty</a>
+          <a href="#" class="hover:text-blue-600">Gallery</a>
+          <a href="#" class="hover:text-blue-600">News</a>
+          <a href="#" class="hover:text-blue-600">Contact</a>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Mobile Menu -->
+    <div class="md:hidden" *ngIf="menuOpen">
+      <div class="px-4 pt-2 pb-4 space-y-8">
+        <a href="#" class="block hover:bg-gray-100 hover:p-6">Home</a>
+        <a href="#" class="block hover:bg-gray-100 hover:p-6">About</a>
+        <a href="#" class="block hover:bg-gray-100 hover:p-6">Academics</a>
+        <a href="#" class="block hover:bg-gray-100 hover:p-6">Admissions</a>
+        <a href="#" class="block hover:bg-gray-100 hover:p-6">Faculty</a>
+        <a href="#" class="block hover:bg-gray-100 hover:p-6">Gallery</a>
+        <a href="#" class="block hover:bg-gray-100 hover:p-6">News</a>
+        <a href="#" class="block hover:bg-gray-100 hover:p-6">Contact</a>
+      </div>
+    </div>
+  </nav>
+  
+  
+  
+ 
+  
