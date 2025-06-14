@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { UsersserviceService } from '../../../service/usersservice.service';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrl: './sign-in.component.css'
 })
 export class SignInComponent {
-  constructor(private studentService: UsersserviceService, private router: Router){}
+  constructor(private studentService: UsersserviceService, private router: Router, private destroyRef: DestroyRef){}
 
 
   signInForm = new FormGroup({
@@ -25,7 +25,7 @@ export class SignInComponent {
       password: this.signInForm.value.password!
     }
     
-    this.studentService.studentSignIn(obj).subscribe({
+    const subscription = this.studentService.studentSignIn(obj).subscribe({
       next: (res: any)=>{
         console.log(res);
 
@@ -38,6 +38,9 @@ export class SignInComponent {
       }
     })
     console.log(this.signInForm.value);
+    this.destroyRef.onDestroy(()=>{
+      subscription.unsubscribe()
+    })
     
   }
 

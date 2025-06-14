@@ -1,1 +1,11 @@
+@if (isOpen) {
+    <app-error-modal title="An error occurred!" message="Session Time Out" (confirm)="onConfirm()"/>
+
+}
 <p>dashboard works!</p>
+
+
+@if (isRequestOpen) {
+    <app-request />
+}
+<button (click)="onFetch()">Request</button>

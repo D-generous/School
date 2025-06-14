@@ -27,6 +27,10 @@ export class UsersserviceService {
     return this.signInUsers('http://localhost/school/student/signin.php', obj)
   }
 
+  // adminSignIn(obj: {email: string, password: string}){
+  //   return this.signInUsers('http://localhost/school/admin/signin.php', obj)
+  // }
+
   saveToken(token: string){
     localStorage.setItem('token', token)
   }

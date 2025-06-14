@@ -132,7 +132,10 @@ export class SignUpComponent {
       this.studentSignUpForm.value.class === 'SSS1'
     ) {
       this.showOption = true;
+    }else{
+      this.showOption = false
     }
+
   }
   onSignUp() {
     if (this.studentSignUpForm.invalid) {
@@ -158,11 +161,11 @@ export class SignUpComponent {
       next: (res: any) => {
         console.log(res);
 
-        if (res.status === true) {
-          this.router.navigate(['/student/signin']
-            // , { replaceUrl: true }
-          );
-        }
+        // if (res.status === true) {
+        //   this.router.navigate(['/student/signin']
+        //     // , { replaceUrl: true }
+        //   );
+        // }
       },
     });
 
