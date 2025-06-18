@@ -10,12 +10,14 @@ import { authGuard } from './guard/auth.guard';
 import { SignInComponent as adminSignIn } from './pages/admin/sign-in/sign-in.component';
 import { DashboardComponent as adminDash } from './pages/admin/dashboard/dashboard.component';
 import { adminauthGuard } from './guard/adminauth.guard';
+import { PaymentComponent } from './pages/student/payment/payment.component';
 // import { DashbboardComponent as adminDash } from './pages/admin/dashboard/dashboard.component';
 
 export const routes: Routes = [
     {path: 'student/signup', component: SignUpComponent},
     {path: 'student/signin', component: SignInComponent},
     {path: 'student/dashboard', component: DashboardComponent, canActivate: [authGuard]},
+    {path: 'payment', component: PaymentComponent},
 
     {path: 'parent/signup', component: ParentSignUp},
     // {path: 'parent/signin', component: ParentSignIn},

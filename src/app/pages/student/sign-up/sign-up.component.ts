@@ -166,6 +166,7 @@ export class SignUpComponent {
         //     // , { replaceUrl: true }
         //   );
         // }
+        alert("You have successfully submitted your application. We will get back to you after the admission committee have review your profile. Thank you.")
       },
     });
 

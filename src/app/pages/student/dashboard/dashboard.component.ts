@@ -22,12 +22,27 @@ export class DashboardComponent {
   ) {}
 
   ngOnInit() {
+    this.fetchcurrentAcademicYear()
     this.checkScreenSize();
 
     const token = this.studentService.getToken();
 
     if (token) {
-      this.fetchData(token);
+      // this.fetchData(token);
+
+      this.studentService.fetchData(token).subscribe({
+        next: (res: any) => {
+          console.log(res);
+          this.username = res.user.username
+          console.log(this.username);
+          
+        },
+        error: (err) => {
+          if (err.status === 401) {
+            this.studentService.logout();
+          }
+        },
+      });
 
       this.studentService.startSessionTimer(() => {
         this.isShowModal = true;
@@ -54,27 +69,39 @@ export class DashboardComponent {
   }
 
   fetchData(token: string) {
-    this.http
-      .get('http://localhost/school/student/dashboard.php', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .subscribe({
-        next: (res: any) => {
-          console.log(res);
-          this.username = res.user.username
-          console.log(this.username);
+    
+    // this.http
+    //   .get('http://localhost/school/student/dashboard.php', {
+    //     headers: { Authorization: `Bearer ${token}` },
+    //   })
+    //   .subscribe({
+    //     next: (res: any) => {
+    //       console.log(res);
+    //       this.username = res.user.username
+    //       console.log(this.username);
           
-        },
-        error: (err) => {
-          if (err.status === 401) {
-            this.studentService.logout();
-          }
-        },
-      });
+    //     },
+    //     error: (err) => {
+    //       if (err.status === 401) {
+    //         this.studentService.logout();
+    //       }
+    //     },
+    //   });
   }
 
   onConfirm(){
     this.isShowModal = false
     this.studentService.logout()
+  }
+
+  currentAcademicYear = ''
+  fetchcurrentAcademicYear(){
+    this.http.get('http://localhost/school/academicyear.php').subscribe({
+      next: (res:any) =>{
+        this.currentAcademicYear = res
+        console.log(res);
+        
+      }
+    })
   }
 }

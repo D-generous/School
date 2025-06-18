@@ -1,1 +1,33 @@
 <p>request works!</p>
+
+@for (item of details; track item.id) {
+<p>{{ item.first_name }}</p>
+<p>{{ item.email }}</p>
+
+<form class="space-y-4">
+  <textarea
+    [(ngModel)]="comment[item.id]"
+    name="comment_{{ item.id }}"
+    rows="10"
+    cols="40"
+    id=""
+    placeholder="Type comment for {{item.first_name}} here..."
+    class="p-2 border rounded"
+  ></textarea>
+
+  <div class="flex">
+    <button
+      class="bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700"
+      (click)="onAccept(item.id)"
+    >
+      Accept
+    </button>
+    <button
+     type="button" class="bg-red-600 text-white p-3 rounded-md hover:bg-blue-700"
+      (click)="onReject(item.id)"
+    >
+      Reject
+    </button>
+  </div>
+</form>
+}
