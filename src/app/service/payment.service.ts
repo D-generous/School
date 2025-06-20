@@ -18,7 +18,14 @@ export class PaymentService {
   }
 
   // Call backend to verify payment
-  verifyPayment(reference: string): Observable<any> {
-    return this.http.get(`${this.verifyPaymentUrl}?reference=${reference}`);
+  verifyPayment(reference: string, data: {email: string,
+    userId: number,
+    amount: number,
+    class: string,
+    term: string,
+    year: string,
+    ref: string
+  }): Observable<any> {
+    return this.http.post(`${this.verifyPaymentUrl}?reference=${reference}`, data);
   }
 }

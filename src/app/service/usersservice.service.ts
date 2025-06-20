@@ -107,4 +107,9 @@ export class UsersserviceService {
       headers: { Authorization: `Bearer ${token}` },
     });
   }
+
+  currentAcademicYear(){
+    return this.http.get('http://localhost/school/academicyear.php')
+
+  }
 }

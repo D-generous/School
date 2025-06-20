@@ -15,7 +15,17 @@ export class PaymentComponent {
   userdetails?: any = ''
   
 
-  
+  currentAcademicYear:any = ''
+
+  fetchcurrentAcademicYear(){
+    this.studentService.currentAcademicYear().subscribe({
+      next: (res:any) =>{
+        this.currentAcademicYear = res
+        console.log(this.currentAcademicYear);
+        
+      }
+    })
+  }
 
 
   payWithPaystack() {
@@ -23,57 +33,80 @@ export class PaymentComponent {
     if (token) {
       this.studentService.fetchData(token).subscribe({
         next: (res:any) => {
-  
-          const paymentDetails = {
-            email: res.user.email,
-            amount: 5000,
-            class: res.user.class
-          };
+          console.log(res);
           
-          console.log(paymentDetails); // ✅ Correct time to access it
+          this.studentService.currentAcademicYear().subscribe({
+            next: (result:any) =>{
+              const academicyear = result
+              
+              const paymentDetails = {
+                email: res.user.email,
+                userId: res.user.id,
+                amount: 5000,
+                class: res.user.class,
+                term: academicyear.term,
+                year: academicyear.year
+              };
+              
+              console.log(paymentDetails); // ✅ Correct time to access it
+    
+    
+              // Step 1: Call backend to initialize the payment
+              this.paymentService.initializePayment(paymentDetails).subscribe({
+                next: (response)=>{
+                  if (response && response.status) {
+                    const publicKey = 'pk_test_71c23e56349895029fed608879674f7f80b29573'; // Replace with your Paystack public key
+                          
+                    // Step 2: Open Paystack payment modal
+                    const paymentHandler = (window as any).PaystackPop.setup({
+                      key: publicKey,
+                      email: paymentDetails.email,
+                      amount: paymentDetails.amount * 100, // Convert amount to kobo
+                      ref: response.data.reference, // Reference from backend
+                      callback: (paymentResponse: any) => {
+                  console.log(paymentResponse);
+                        console.log('Payment successful. Reference:', paymentResponse.reference);
+          
+                        // Step 3: Call backend to verify the payment
 
-
-          // Step 1: Call backend to initialize the payment
-          this.paymentService.initializePayment(paymentDetails).subscribe(
-            (response) => { 
-                     
-              if (response && response.status) {
-                const publicKey = 'pk_test_71c23e56349895029fed608879674f7f80b29573'; // Replace with your Paystack public key
-                      
-                // Step 2: Open Paystack payment modal
-                const paymentHandler = (window as any).PaystackPop.setup({
-                  key: publicKey,
-                  email: paymentDetails.email,
-                  amount: paymentDetails.amount * 100, // Convert amount to kobo
-                  ref: response.data.reference, // Reference from backend
-                  callback: (paymentResponse: any) => {
-              // console.log(paymentResponse);
-                    console.log('Payment successful. Reference:', paymentResponse.reference);
-      
-                    // Step 3: Call backend to verify the payment
-                    
-                    this.paymentService.verifyPayment(paymentResponse.reference).subscribe(
-                      (verifyResponse) => {
+                        const newPaymentDetails = {...paymentDetails, 'ref': paymentResponse.reference}
+                        console.log(paymentDetails);
                         
-                        if (verifyResponse) {
-                          alert('Payment verified successfully!');
-                        } else {
-                          alert('Payment verification failed!');
-                        }
+                        
+                        this.paymentService.verifyPayment(paymentResponse.reference, newPaymentDetails).subscribe(
+                          (verifyResponse) => {
+                            // console.log(paymentDetails);
+                            
+
+
+                            console.log(verifyResponse);
+                            
+                            
+                            if (verifyResponse) {
+                              alert('Payment verified successfully!');
+                            } else {
+                              alert('Payment verification failed!');
+                            }
+                          },
+                          (error) => console.error('Verification error:', error)
+                        );
                       },
-                      (error) => console.error('Verification error:', error)
-                    );
-                  },
-                  onClose: () => {
-                    console.log('Payment window closed.');
+                      onClose: () => {
+                        console.log('Payment window closed.');
+                      }
+                    });
+          
+                    paymentHandler.openIframe();
                   }
-                });
-      
-                paymentHandler.openIframe();
-              }
-            },
-            (error) => console.error('Payment initialization error:', error)
-          );
+
+                },
+                error: (error) => console.error('Payment initialization error:', error)
+              })
+              
+              
+            }
+          })
+  
           
         }
       });
@@ -81,5 +114,5 @@ export class PaymentComponent {
 
   }
 
-
+ 
 }

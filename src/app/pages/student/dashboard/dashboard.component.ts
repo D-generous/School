@@ -15,6 +15,7 @@ export class DashboardComponent {
   isSmallScreen = false;
   isShowModal = false;
   username: any = ''
+  userclass: any = ''
 
   constructor(
     private http: HttpClient,
@@ -28,12 +29,12 @@ export class DashboardComponent {
     const token = this.studentService.getToken();
 
     if (token) {
-      // this.fetchData(token);
 
       this.studentService.fetchData(token).subscribe({
         next: (res: any) => {
           console.log(res);
           this.username = res.user.username
+          this.userclass = res.user.class
           console.log(this.username);
           
         },
@@ -68,38 +69,19 @@ export class DashboardComponent {
     }
   }
 
-  fetchData(token: string) {
-    
-    // this.http
-    //   .get('http://localhost/school/student/dashboard.php', {
-    //     headers: { Authorization: `Bearer ${token}` },
-    //   })
-    //   .subscribe({
-    //     next: (res: any) => {
-    //       console.log(res);
-    //       this.username = res.user.username
-    //       console.log(this.username);
-          
-    //     },
-    //     error: (err) => {
-    //       if (err.status === 401) {
-    //         this.studentService.logout();
-    //       }
-    //     },
-    //   });
-  }
-
   onConfirm(){
     this.isShowModal = false
     this.studentService.logout()
   }
 
-  currentAcademicYear = ''
+  currentAcademicYear:any = ''
   fetchcurrentAcademicYear(){
-    this.http.get('http://localhost/school/academicyear.php').subscribe({
+    this.studentService.currentAcademicYear().subscribe({
       next: (res:any) =>{
-        this.currentAcademicYear = res
         console.log(res);
+        
+        this.currentAcademicYear = res
+        console.log(this.currentAcademicYear);
         
       }
     })

@@ -1,11 +1,236 @@
 @if (isOpen) {
-    <app-error-modal title="An error occurred!" message="Session Time Out" (confirm)="onConfirm()"/>
+<app-error-modal
+  title="An error occurred!"
+  message="Session Time Out"
+  (confirm)="onConfirm()"
+/>
 
 }
 <p>dashboard works!</p>
 
-
 @if (isRequestOpen) {
-    <app-request />
+<app-request />
 }
 <button (click)="onFetch()">Request</button>
+
+<!-- Admin Dashboard Template using Angular & Tailwind CSS -->
+<div class="min-h-screen bg-gray-100" *ngIf="true">
+  <!-- Top Navbar -->
+  <header class="bg-white shadow-md p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-blue-700">School Admin Dashboard</h1>
+    <div class="flex items-center gap-4">
+      <!-- Session Switcher -->
+      <select
+        class="border border-gray-300 rounded p-2 text-sm"
+        name="session-switch"
+      >
+        <option value="2022/2023">2022/2023</option>
+        <option value="2023/2024" selected>2023/2024</option>
+        <option value="2024/2025">2024/2025</option>
+      </select>
+      <button
+        class="text-sm bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+      >
+        Logout
+      </button>
+    </div>
+  </header>
+
+  <!-- Main layout -->
+  <div class="flex flex-col md:flex-row">
+    <!-- Sidebar -->
+    <input type="checkbox" id="sidebar-toggle" class="hidden peer" />
+    <label
+      for="sidebar-toggle"
+      class="md:hidden bg-blue-700 text-white p-2 cursor-pointer"
+    >
+      ☰ Menu
+    </label>
+    <aside
+      class="w-full md:w-64 bg-white shadow-md p-4 md:h-screen peer-checked:block hidden md:block"
+    >
+      <nav class="space-y-4">
+        <button
+          class="block text-left text-gray-700 hover:text-blue-600 w-full"
+          (click)="selectSection('dashboard')"
+        >
+          Dashboard
+        </button>
+        <button
+          class="block text-left text-gray-700 hover:text-blue-600 w-full"
+          (click)="selectSection('students')"
+        >
+          Manage Students
+        </button>
+        <button
+          class="block text-left text-gray-700 hover:text-blue-600 w-full"
+          (click)="selectSection('teachers')"
+        >
+          Teachers
+        </button>
+        <button
+          class="block text-left text-gray-700 hover:text-blue-600 w-full"
+          (click)="selectSection('classes')"
+        >
+          Classes
+        </button>
+        <button
+          class="block text-left text-gray-700 hover:text-blue-600 w-full"
+          (click)="selectSection('results')"
+        >
+          Results
+        </button>
+        <button
+          class="block text-left text-gray-700 hover:text-blue-600 w-full"
+          (click)="selectSection('payments')"
+        >
+          Payments
+        </button>
+        <button
+          class="block text-left text-gray-700 hover:text-blue-600 w-full"
+          (click)="selectSection('session')"
+        >
+          Change Session
+        </button>
+        <button
+          class="block text-left text-gray-700 hover:text-blue-600 w-full"
+          (click)="selectSection('notices')"
+        >
+          Notices
+        </button>
+        <button
+          class="block text-left text-gray-700 hover:text-blue-600 w-full"
+          (click)="selectSection('events')"
+        >
+          Events
+        </button>
+        <button
+          class="block text-left text-gray-700 hover:text-blue-600 w-full"
+          (click)="selectSection('settings')"
+        >
+          Settings
+        </button>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-4 sm:p-6">
+      <!-- Dashboard Section -->
+      <section *ngIf="selectedSection === 'dashboard'">
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6"
+        >
+          <div class="bg-white p-4 shadow rounded-lg">
+            <h2 class="text-gray-500 text-sm">Total Students</h2>
+            <p class="text-2xl font-bold">1,245</p>
+          </div>
+          <div class="bg-white p-4 shadow rounded-lg">
+            <h2 class="text-gray-500 text-sm">Teachers</h2>
+            <p class="text-2xl font-bold">57</p>
+          </div>
+          <div class="bg-white p-4 shadow rounded-lg">
+            <h2 class="text-gray-500 text-sm">Classes</h2>
+            <p class="text-2xl font-bold">12</p>
+          </div>
+          <div class="bg-white p-4 shadow rounded-lg">
+            <h2 class="text-gray-500 text-sm">Payments (This Term)</h2>
+            <p class="text-2xl font-bold">₦2,500,000</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Manage Students Section -->
+      <section *ngIf="selectedSection === 'students'">
+        <div class="bg-white p-4 sm:p-6 rounded-lg shadow mb-6 overflow-x-auto">
+          <h3 class="text-lg font-semibold mb-4">
+            Recent Student Signup Requests
+          </h3>
+          <table class="w-full table-auto">
+            <thead>
+              <tr class="bg-gray-100 text-left text-sm">
+                <th class="p-2">Name</th>
+                <th class="p-2">Email</th>
+                <th class="p-2">Class</th>
+                <th class="p-2">Status</th>
+                <th class="p-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="p-2 whitespace-nowrap">John Doe</td>
+                <td class="p-2 whitespace-nowrap">johnexample.com</td>
+                <td class="p-2 whitespace-nowrap">JSS1</td>
+                <td class="p-2 text-yellow-500">Pending</td>
+                <td class="p-2 whitespace-nowrap">
+                  <button
+                    class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 mr-2"
+                  >
+                    Accept
+                  </button>
+                  <button
+                    class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                  >
+                    Reject
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Notices Section -->
+      <section *ngIf="selectedSection === 'notices'">
+        <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
+          <h3 class="text-lg font-semibold mb-4">Latest Notices</h3>
+          <ul class="space-y-2 text-sm">
+            <li class="border-b pb-2">
+              <strong>Holiday Announcement</strong>
+              <p class="text-gray-600">
+                School closes by June 30th. Resume September 10th.
+              </p>
+            </li>
+            <li class="border-b pb-2">
+              <strong>Mid-Term Test</strong>
+              <p class="text-gray-600">
+                Begins July 15th. All students must participate.
+              </p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Change Session-->
+      <section *ngIf="selectedSection === 'session'">
+        <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
+          <h3 class="text-lg font-semibold mb-4">Session Update</h3>
+          <!-- Session Switcher (Flexible Input) -->
+          <form (ngSubmit)="updateSession()" [formGroup]="sessionForm" class="space-y-4">
+            
+            <div>
+                <label for="session-input" class="block mb-2 text-sm font-medium text-gray-900"
+                  >Session</label
+                >
+                <input
+                  type="text"
+                  id="session-input"
+                  class="border border-gray-300 rounded p-2 text-sm"
+                  placeholder="2024/2025"
+                  formControlName="session"
+                />
+
+            </div>
+            
+            <button
+              type="submit"
+              [disabled]="sessionForm.invalid"
+              class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm"
+            >
+              Update Session
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
