@@ -84,5 +84,12 @@ export class AdminService {
   }
 
 
+  fetchData(token: any) {
+    return this.http
+      .get('http://localhost/school/admin/dashboard.php', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+
+    }
   
 }

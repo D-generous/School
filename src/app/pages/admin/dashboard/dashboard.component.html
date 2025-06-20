@@ -17,17 +17,22 @@
 <div class="min-h-screen bg-gray-100" *ngIf="true">
   <!-- Top Navbar -->
   <header class="bg-white shadow-md p-4 flex justify-between items-center">
-    <h1 class="text-2xl font-bold text-blue-700">School Admin Dashboard</h1>
+    <h1 class="text-sm sm:text-2xl font-bold text-blue-700">School Admin Dashboard</h1>
     <div class="flex items-center gap-4">
       <!-- Session Switcher -->
-      <select
-        class="border border-gray-300 rounded p-2 text-sm"
-        name="session-switch"
-      >
-        <option value="2022/2023">2022/2023</option>
-        <option value="2023/2024" selected>2023/2024</option>
-        <option value="2024/2025">2024/2025</option>
-      </select>
+       <form [formGroup]="termSwitch">
+           <select
+             class="border border-gray-300 rounded p-2 text-sm"
+             name="session-switch"
+             formControlName="term"
+             (change)="onSwitch()"
+           >
+             <option value="1st Term">1st Term</option>
+             <option value="2nd Term">2nd Term</option>
+             <option value="3rd Term">3rd Term</option>
+           </select>
+
+       </form>
       <button
         class="text-sm bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
       >

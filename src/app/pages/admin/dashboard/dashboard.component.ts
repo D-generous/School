@@ -10,6 +10,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { UsersserviceService } from '../../../service/usersservice.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,10 +27,42 @@ export class DashboardComponent {
   constructor(
     private http: HttpClient,
     private adminService: AdminService,
+    private userService: UsersserviceService,
     private destroyRef: DestroyRef
   ) {}
   selectedSection: string = 'dashboard';
   isOpen = false;
+
+  termSwitch = new FormGroup({
+    term: new FormControl<'Choose term' | '1st Term' | '2nd Term' | '3rd Term'>('Choose term', {validators: [Validators.required]})
+  })
+
+  onSwitch(){
+
+    
+
+    this.userService.currentAcademicYear().subscribe({
+      next: (res: any)=>{
+
+        const obj = {
+          term: this.termSwitch.value.term,
+          year: res.year
+        }
+
+        console.log(obj);
+
+        this.http.post('http://localhost/school/term.php', obj).subscribe({
+          next: (res: any) => {
+            console.log(res);
+          },
+        });
+        
+        
+      }
+    })
+    
+  }
+
 
   selectSection(section: string) {
     this.selectedSection = section;
@@ -41,7 +74,7 @@ export class DashboardComponent {
   ngOnInit() {
     const token = this.adminService.getToken();
     if (token) {
-      this.fetchData(token);
+      this.fetchData();
 
       this.adminService.startSessionTimeOut(() => {
         this.isOpen = true;
@@ -49,21 +82,22 @@ export class DashboardComponent {
     }
   }
 
-  fetchData(token: any) {
-    this.http
-      .get('http://localhost/school/admin/dashboard.php', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .subscribe({
-        next: (res: any) => {
-          console.log(res);
-        },
-        error: (err) => {
-          if (err.status === 401 || err.status === 403) {
-            this.adminService.logout();
-          }
-        },
-      });
+  fetchData() {
+    const token = this.adminService.getToken()
+    if (token) {
+      this.adminService.fetchData(token)
+        .subscribe({
+          next: (res: any) => {
+            console.log(res);
+          },
+          error: (err) => {
+            if (err.status === 401 || err.status === 403) {
+              this.adminService.logout();
+            }
+          },
+        });
+      
+    }
   }
 
   onConfirm() {
