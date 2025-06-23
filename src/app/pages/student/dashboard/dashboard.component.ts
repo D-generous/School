@@ -16,6 +16,7 @@ export class DashboardComponent {
   isSmallScreen = false;
   isShowModal = false;
   username: any = '';
+  userpic: any = '';
   userclass: any = '';
   userdetails?: any;
 
@@ -24,6 +25,24 @@ export class DashboardComponent {
     private studentService: UsersserviceService
   ) {}
 
+  // selectedFile = ''
+  onFileSelected(event: any) {
+
+    const formData: FormData = new FormData();
+    const selectedFile = event.target.files[0];
+    formData.append('file', selectedFile);
+
+    console.log(formData);
+    
+
+    this.http.post('http://localhost/school/student/replacepic.php', formData).subscribe({
+      next: (res: any)=>{
+        console.log(res);
+        
+      }
+    })
+  }
+  
   ngOnInit() {
     this.fetchcurrentAcademicYear();
 
@@ -34,6 +53,7 @@ export class DashboardComponent {
         next: (res: any) => {
           console.log(res);
           this.username = res.user.username;
+          this.userpic = res.user.profile_pic;
           this.userclass = res.user.class;
           console.log(this.username);
         },
@@ -76,13 +96,15 @@ export class DashboardComponent {
         console.log(this.currentAcademicYear);
 
         // console.log(this.currentAcademicYear);
-        this.checkPaymentValidity(this.currentAcademicYear);
+        this.checkCurrentTermPaymentValidity(this.currentAcademicYear);
       },
     });
   }
 
   validPayment = false
-  checkPaymentValidity(data: any) {
+  paymentHistory:any[] = []
+  details: any[] = []
+  checkCurrentTermPaymentValidity(data: any) {
     const token = this.studentService.getToken();
     if (token) {
       this.studentService.fetchData(token).subscribe({
@@ -110,6 +132,24 @@ export class DashboardComponent {
                 console.log(res);
               },
             });
+
+
+            // console.log(this.userdetails.id);
+             
+            this.http.get(`http://localhost/school/paymenthistory.php?id=${this.userdetails.id}`).subscribe({
+              next: (res:any)=>{
+                // if (res.status === true) {
+                //   this.paymentHistory = res.data    
+                // }else{
+                //   this.paymentHistory = res.data    
+
+                // }
+                this.paymentHistory = res.history
+                console.log(res);
+                
+                
+              }
+            })
         },
       });
     }

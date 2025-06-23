@@ -1,123 +1,325 @@
 @if (isShowModal) {
-    <app-error-modal title="An error occurred!" message="Session Timeout" (confirm)="onConfirm()"/>
+<app-error-modal
+  title="An error occurred!"
+  message="Session Timeout"
+  (confirm)="onConfirm()"
+/>
 }
 
 <div class="min-h-screen bg-gray-100" *ngIf="true">
-    <!-- Top Navbar -->
-    <header class="bg-white shadow-md p-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-blue-700">Student Dashboard</h1>
-      <div class="flex items-center gap-4">
-        
+  <!-- Top Navbar -->
+  <header class="bg-white shadow-md p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-blue-700">Student Dashboard</h1>
+    <div class="flex items-center gap-4">
+      <button
+        class="text-sm bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+      >
+        Logout
+      </button>
+    </div>
+  </header>
+
+  <!-- Main layout -->
+  <div class="flex flex-col md:flex-row">
+    <!-- Sidebar -->
+    <input type="checkbox" id="sidebar-toggle" class="hidden peer" />
+    <label
+      for="sidebar-toggle"
+      class="md:hidden bg-blue-700 text-white p-2 cursor-pointer"
+    >
+      ☰ Menu
+    </label>
+    <aside
+      class="w-full md:w-64 bg-blue-900 shadow-md p-4 md:h-screen peer-checked:block hidden md:block"
+    >
+      <nav class="space-y-4">
+        <p class="text-gray-500">General</p>
         <button
-          class="text-sm bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+          class="block text-left w-full px-4 py-2 rounded transition-all duration-200"
+          [ngClass]="{
+            'text-white bg-blue-800': selectedSection === 'dashboard',
+            'text-white border border-transparent hover:text-blue-600 hover:border-blue-600 hover:bg-blue-50':
+              selectedSection !== 'dashboard'
+          }"
+          (click)="selectSection('dashboard')"
         >
-          Logout
+          Dashboard
         </button>
-      </div>
-    </header>
-  
-    <!-- Main layout -->
-    <div class="flex flex-col md:flex-row">
-      <!-- Sidebar -->
-      <input type="checkbox" id="sidebar-toggle" class="hidden peer" />
-      <label
-        for="sidebar-toggle"
-        class="md:hidden bg-blue-700 text-white p-2 cursor-pointer"
-      >
-        ☰ Menu
-      </label>
-      <aside
-        class="w-full md:w-64 bg-white shadow-md p-4 md:h-screen peer-checked:block hidden md:block"
-      >
-        <nav class="space-y-4">
-          <button
-            class="block text-left text-gray-700 hover:text-blue-600 w-full"
-            (click)="selectSection('dashboard')"
-          >
-            Dashboard
-          </button>
-          <button
-            class="block text-left text-gray-700 hover:text-blue-600 w-full"
-            (click)="selectSection('students')"
-          >
-            Manage Students
-          </button>
-          <button
-            class="block text-left text-gray-700 hover:text-blue-600 w-full"
-            (click)="selectSection('teachers')"
-          >
-            Teachers
-          </button>
-          <button
-            class="block text-left text-gray-700 hover:text-blue-600 w-full"
-            (click)="selectSection('classes')"
-          >
-            Classes
-          </button>
-          <button
-            class="block text-left text-gray-700 hover:text-blue-600 w-full"
-            (click)="selectSection('results')"
-          >
-            Results
-          </button>
-          <button
-            class="block text-left text-gray-700 hover:text-blue-600 w-full"
-            [disabled]="validPayment"
-            (click)="selectSection('payments')"
-          >
-            Pay Tuition
-          </button>
-          <button
-            class="block text-left text-gray-700 hover:text-blue-600 w-full"
-            (click)="selectSection('session')"
-          >
-            Change Session
-          </button>
-          <button
-            class="block text-left text-gray-700 hover:text-blue-600 w-full"
-            (click)="selectSection('notices')"
-          >
-            Notices
-          </button>
-          <button
-            class="block text-left text-gray-700 hover:text-blue-600 w-full"
-            (click)="selectSection('events')"
-          >
-            Events
-          </button>
-          <button
-            class="block text-left text-gray-700 hover:text-blue-600 w-full"
-            (click)="selectSection('settings')"
-          >
-            Settings
-          </button>
-        </nav>
-      </aside>
-  
-      <!-- Main Content -->
-      <main class="flex-1 p-4 sm:p-6">
-        <!-- Dashboard Section -->
-        <section *ngIf="selectedSection === 'dashboard'">
-            <h1 class="text-2xl font-bold mb-4">Welcome, {{username}}!</h1>
-            <h1 class="text-2xl font-bold mb-4">{{currentAcademicYear.year}}</h1>
-            <h1 class="text-2xl font-bold mb-4">{{currentAcademicYear.term}}</h1>
-            <h1 class="text-2xl font-bold mb-4">{{userclass}}</h1>
-            <p class="text-gray-600">This is your dashboard overview.</p>
-      
-            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div class="bg-white p-4 rounded-lg shadow">📚 Courses</div>
-              <div class="bg-white p-4 rounded-lg shadow">🧾 Results</div>
-              <div class="bg-white p-4 rounded-lg shadow">💳 Payments</div>
-            </div>
-        </section>
+        <p class="text-gray-500">Profile</p>
+        <button
+          class="block text-left w-full px-4 py-2 rounded transition-all duration-200"
+          [ngClass]="{
+            'text-white bg-blue-800': selectedSection === 'profile',
+            'text-white border border-transparent hover:text-blue-600 hover:border-blue-600 hover:bg-blue-50':
+              selectedSection !== 'profile'
+          }"
+          (click)="selectSection('profile')"
+        >
+          My Profile
+        </button>
+        <button
+          class="block text-left w-full px-4 py-2 rounded transition-all duration-200"
+          [ngClass]="{
+            'text-white bg-blue-800': selectedSection === 'password',
+            'text-white border border-transparent hover:text-blue-600 hover:border-blue-600 hover:bg-blue-50':
+              selectedSection !== 'password'
+          }"
+          (click)="selectSection('password')"
+        >
+          Change Password
+        </button>
+        <p class="text-gray-500">Academics</p>
+        <button
+          class="block text-left w-full px-4 py-2 rounded transition-all duration-200"
+          [ngClass]="{
+            'text-white bg-blue-800': selectedSection === 'classes',
+            'text-white border border-transparent hover:text-blue-600 hover:border-blue-600 hover:bg-blue-50':
+              selectedSection !== 'classes'
+          }"
+          (click)="selectSection('classes')"
+        >
+          Classes
+        </button>
+        <button
+          class="block text-left w-full px-4 py-2 rounded transition-all duration-200"
+          [ngClass]="{
+            'text-white bg-blue-800': selectedSection === 'results',
+            'text-white border border-transparent hover:text-blue-600 hover:border-blue-600 hover:bg-blue-50':
+              selectedSection !== 'results'
+          }"
+          (click)="selectSection('results')"
+        >
+          Results
+        </button>
+        <button
+          class="block text-left w-full px-4 py-2 rounded transition-all duration-200"
+          [ngClass]="{
+            'text-white bg-blue-800': selectedSection === 'times-table',
+            'text-white border border-transparent hover:text-blue-600 hover:border-blue-600 hover:bg-blue-50':
+              selectedSection !== 'times-table'
+          }"
+          (click)="selectSection('times-table')"
+        >
+          View Timetable
+        </button>
+        <p class="text-gray-500">Payments</p>
+        <button
+          class="block text-left w-full px-4 py-2 rounded transition-all duration-200 flex gap-3"
+          [ngClass]="{
+            'text-white bg-blue-800': selectedSection === 'payments',
+            'text-white border border-transparent hover:text-blue-600 hover:border-blue-600 hover:bg-blue-50':
+              selectedSection !== 'payments'
+          }"
+          [disabled]="validPayment"
+          (click)="selectSection('payments')"
+        >
+          Pay Tuition @if (validPayment) {
+          <p class="bg-green-100 px-2 font-semibold rounded-xs text-black">
+            PAID
+          </p>
+          }
+        </button>
+        <button
+          class="block text-left w-full px-4 py-2 rounded transition-all duration-200"
+          [ngClass]="{
+            'text-white bg-blue-800': selectedSection === 'payment-history',
+            'text-white border border-transparent hover:text-blue-600 hover:border-blue-600 hover:bg-blue-50':
+              selectedSection !== 'payment-history'
+          }"
+          (click)="selectSection('payment-history')"
+        >
+          Payment History
+        </button>
+        <p class="text-gray-500">Others</p>
+        <button
+          class="block text-left w-full px-4 py-2 rounded transition-all duration-200"
+          [ngClass]="{
+            'text-white bg-blue-800': selectedSection === 'session',
+            'text-white border border-transparent hover:text-blue-600 hover:border-blue-600 hover:bg-blue-50':
+              selectedSection !== 'session'
+          }"
+          (click)="selectSection('session')"
+        >
+          Change Session
+        </button>
+        <button
+          class="block text-left w-full px-4 py-2 rounded transition-all duration-200"
+          [ngClass]="{
+            'text-white bg-blue-800': selectedSection === 'notices',
+            'text-white border border-transparent hover:text-blue-600 hover:border-blue-600 hover:bg-blue-50':
+              selectedSection !== 'notices'
+          }"
+          (click)="selectSection('notices')"
+        >
+          Notices
+        </button>
+        <button
+          class="block text-left w-full px-4 py-2 rounded transition-all duration-200"
+          [ngClass]="{
+            'text-white bg-blue-800': selectedSection === 'events',
+            'text-white border border-transparent hover:text-blue-600 hover:border-blue-600 hover:bg-blue-50':
+              selectedSection !== 'events'
+          }"
+          (click)="selectSection('events')"
+        >
+          Events
+        </button>
+        <button
+          class="block text-left w-full px-4 py-2 rounded transition-all duration-200"
+          [ngClass]="{
+            'text-white bg-blue-800': selectedSection === 'settings',
+            'text-white border border-transparent hover:text-blue-600 hover:border-blue-600 hover:bg-blue-50':
+              selectedSection !== 'settings'
+          }"
+          (click)="selectSection('settings')"
+        >
+          Settings
+        </button>
+      </nav>
+    </aside>
 
-        <section *ngIf="selectedSection === 'payments'">
-            <app-payment />
+    <!-- Main Content -->
+    <main class="flex-1 p-4 sm:p-6">
+      <!-- Dashboard Section -->
+      <section *ngIf="selectedSection === 'dashboard'">
+        <img
+          [src]="userpic"
+          class="rounded-full w-24 h-24 border border-gray-300 p-2"
+          [alt]="userpic"
+        />
 
-        </section>
+        <!-- Hidden file input -->
+        <input
+          type="file"
+          id="fileInput"
+          (change)="onFileSelected($event)"
+          hidden
+        />
+        <label for="fileInput" class="cursor-pointer inline-block">
+          <img
+            [src]="userpic"
+            class="rounded-full w-24 h-24 border border-gray-300 p-2 hover:opacity-80 transition"
+            [alt]="userpic"
+          />
+        </label>
+        
+        <h1 class="text-2xl font-bold mb-4">Welcome, {{ username }}!</h1>
+        <h1 class="text-2xl font-bold mb-4">{{ currentAcademicYear.year }}</h1>
+        <h1 class="text-2xl font-bold mb-4">{{ currentAcademicYear.term }}</h1>
+        <h1 class="text-2xl font-bold mb-4">{{ userclass }}</h1>
+        <p class="text-gray-600">This is your dashboard overview.</p>
 
-        <!-- Dashboard Section -->
-        <!-- <section *ngIf="selectedSection === 'dashboard'">
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-white p-4 rounded-lg shadow">📚 Courses</div>
+          <div class="bg-white p-4 rounded-lg shadow">🧾 Results</div>
+          <div class="bg-white p-4 rounded-lg shadow">💳 Payments</div>
+        </div>
+      </section>
+
+      <section *ngIf="selectedSection === 'payments'">
+        <app-payment />
+      </section>
+
+      <section *ngIf="selectedSection === 'payment-history'">
+        <h3 class="font-bold">PAYMENT HISTORY</h3>
+        <div class="overflow-x-auto">
+          <table
+            class="min-w-full divide-y divide-gray-200 rounded-lg shadow-lg"
+          >
+            <thead class="bg-gray-100">
+              <tr>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  INVOICE #
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  AMOUNT
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  DATE
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  ACTION
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              @if (paymentHistory.length > 0) { @for (history of paymentHistory;
+              track $index) {
+              <tr>
+                <td
+                  class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                >
+                  {{ history.class }} - {{ history.term }} -
+                  {{ history.session }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                  #{{ history.amount }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                  {{ history.payment_at | date : "yyyy-MM-dd" }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <button class="text-white py-2 px-4 bg-blue-600 rounded-lg">
+                    PRINT
+                  </button>
+                </td>
+              </tr>
+
+              } }@else {
+              <tr>
+                <td
+                  colspan="4"
+                  class="px-6 py-4 text-center text-sm text-gray-500"
+                >
+                  No payment history available.
+                </td>
+              </tr>
+              }
+              <!-- <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">1</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">IoT Sensors</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Collect real-time traffic/environmental data</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Hardware</td>
+                      </tr> -->
+              <!-- <tr>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">2</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">GPS Modules</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Track location/movement of vehicles</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Hardware</td>
+                    </tr>
+                    <tr>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">3</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">MATLAB</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Signal and data analysis</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Software</td>
+                    </tr>
+                    <tr>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">4</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Python</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Data processing and machine learning</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Software</td>
+                    </tr>
+                    <tr>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">5</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">ArcGIS/QGIS</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Traffic mapping & geospatial visualization</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">GIS Tool</td>
+                    </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Dashboard Section -->
+      <!-- <section *ngIf="selectedSection === 'dashboard'">
           <div
             class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6"
           >
@@ -140,10 +342,8 @@
           </div>
         </section> -->
 
-  
-  
-        <!-- Notices Section -->
-        <!-- <section *ngIf="selectedSection === 'notices'">
+      <!-- Notices Section -->
+      <!-- <section *ngIf="selectedSection === 'notices'">
           <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
             <h3 class="text-lg font-semibold mb-4">Latest Notices</h3>
             <ul class="space-y-2 text-sm">
@@ -162,12 +362,6 @@
             </ul>
           </div>
         </section> -->
-  
-      </main>
-    </div>
+    </main>
   </div>
-
-
-
-
-
+</div>

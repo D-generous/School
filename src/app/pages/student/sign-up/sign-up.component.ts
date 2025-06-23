@@ -155,6 +155,7 @@ export class SignUpComponent {
       guardian_email: this.studentSignUpForm.value.guardian_email!,
       option: this.studentSignUpForm.value.option || null,
       password: this.studentSignUpForm.value.passwords?.password!,
+      profilepicture: this.studentSignUpForm.value.gender === 'Male' ? 'boy.png' : 'girl.png' 
     };
 
     const subscription = this.studentService.StudentSignUp(obj).subscribe({
