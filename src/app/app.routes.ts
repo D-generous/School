@@ -11,6 +11,8 @@ import { SignInComponent as adminSignIn } from './pages/admin/sign-in/sign-in.co
 import { DashboardComponent as adminDash } from './pages/admin/dashboard/dashboard.component';
 import { adminauthGuard } from './guard/adminauth.guard';
 import { PaymentComponent } from './pages/student/payment/payment.component';
+import { ResetPasswordComponent } from './pages/student/reset-password/reset-password.component';
+import { PasswordresetComponent } from './pages/student/passwordreset/passwordreset.component';
 // import { DashbboardComponent as adminDash } from './pages/admin/dashboard/dashboard.component';
 
 export const routes: Routes = [
@@ -18,6 +20,8 @@ export const routes: Routes = [
     {path: 'student/signin', component: SignInComponent},
     {path: 'student/dashboard', component: DashboardComponent, canActivate: [authGuard]},
     {path: 'payment', component: PaymentComponent},
+    {path: 'student/resettoken', component: ResetPasswordComponent},
+    {path: 'student/resetpassword/:userId', component: PasswordresetComponent},
 
     {path: 'parent/signup', component: ParentSignUp},
     // {path: 'parent/signin', component: ParentSignIn},

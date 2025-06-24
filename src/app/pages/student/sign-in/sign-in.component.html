@@ -3,9 +3,15 @@
       <h2 class="text-2xl font-bold mb-6 text-center">Student Signin</h2>
       <form class="space-y-4" [formGroup]="signInForm" (ngSubmit)="onSubmit()">
         <input type="email" placeholder="Email" formControlName="email" class="w-full p-3 border rounded-md" />
-        <input type="password" placeholder="Password" formControlName="password" class="w-full p-3 border rounded-md" />
+        <div>
+            <input type="password" placeholder="Password" formControlName="password" class="w-full p-3 border rounded-md" />
+            <p class="text-end"><a routerLink="/student/resettoken" class="text-blue-600">Forgot password?</a></p>
+
+        </div>
         <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700">Sign Up</button>
-        <p class="text-sm text-center mt-4">Already have an account? <a href="login.html" class="text-blue-600">Login</a></p>
+        <p class="text-sm text-center mt-4">Don't have an account yet? <a [routerLink]="['/student/signup']" class="text-blue-600">Signup</a></p>
       </form>
+
+      <p class="text-center py-2 text-red-400">{{errorMessage}}</p>
     </div>
 </div>

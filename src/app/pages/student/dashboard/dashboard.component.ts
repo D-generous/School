@@ -16,6 +16,7 @@ export class DashboardComponent {
   isSmallScreen = false;
   isShowModal = false;
   username: any = '';
+  userid: any = '';
   userpic: any = '';
   userclass: any = '';
   userdetails?: any;
@@ -26,11 +27,16 @@ export class DashboardComponent {
   ) {}
 
   // selectedFile = ''
-  onFileSelected(event: any) {
+  onFileSelected(event: any, userId: string) {
+
+    // console.log(userId);
+    
+    
 
     const formData: FormData = new FormData();
     const selectedFile = event.target.files[0];
     formData.append('file', selectedFile);
+    formData.append('id', userId);
 
     console.log(formData);
     
@@ -38,9 +44,21 @@ export class DashboardComponent {
     this.http.post('http://localhost/school/student/replacepic.php', formData).subscribe({
       next: (res: any)=>{
         console.log(res);
+
+        
         
       }
     })
+  }
+
+  getProfileImage(picture: string): string {
+    const defaultAvatars = ['boy.png', 'girl.png'];
+    
+    if (defaultAvatars.includes(picture)) {
+      return `${picture}`;
+    } else {
+      return `http://localhost/school/uploads/${picture}`;
+    }
   }
   
   ngOnInit() {
@@ -52,10 +70,12 @@ export class DashboardComponent {
       this.studentService.fetchData(token).subscribe({
         next: (res: any) => {
           console.log(res);
+          this.userid = res.user.id;
           this.username = res.user.username;
           this.userpic = res.user.profile_pic;
           this.userclass = res.user.class;
           console.log(this.username);
+          
         },
         error: (err) => {
           if (err.status === 401) {

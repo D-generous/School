@@ -1,17 +1,18 @@
 import { Component, DestroyRef } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { UsersserviceService } from '../../../service/usersservice.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css'
 })
 export class SignInComponent {
   constructor(private studentService: UsersserviceService, private router: Router, private destroyRef: DestroyRef){}
 
+  errorMessage = ''
 
   signInForm = new FormGroup({
     email: new FormControl(''),
@@ -33,6 +34,9 @@ export class SignInComponent {
           this.studentService.saveToken(res.token)
           this.router.navigate(['/student/dashboard'])
           
+        }else{
+          this.errorMessage = res.message
+
         }
         
       }
@@ -42,6 +46,11 @@ export class SignInComponent {
       subscription.unsubscribe()
     })
     
+    setTimeout(() => {
+      this.errorMessage = ''    
+    }, 3000);
   }
+  
+
 
 }
