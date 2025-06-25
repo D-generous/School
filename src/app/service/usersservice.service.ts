@@ -94,11 +94,11 @@ export class UsersserviceService {
     }
   }
 
-  private signInUsers(url: string, obj: {}) {
+  public signInUsers(url: string, obj: {}) {
     return this.http.post<{ token: string }>(url, obj);
   }
 
-  private signUpUsers(url: string, obj: {}) {
+  public signUpUsers(url: string, obj: {}) {
     return this.http.post(url, obj);
   }
 
