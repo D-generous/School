@@ -19,17 +19,39 @@ export class SignInComponent {
   errorMessage = ''
 
   onSubmit(){
+    if (!this.signInForm.valid) {
+      console.log("empty");
+      return
+    }
+
     const obj ={
       email: this.signInForm.value.email!,
       password: this.signInForm.value.password!
 
     }
+
+    console.log(obj);
+    
     this.teacherService.teacherSignIn(obj).subscribe({
       next: (res:any)=>{
-        console.log(res);
+        
+        if (res.status === true) {
+          console.log(res);
+          this.teacherService.saveToken(res.token)
+          this.router.navigate(['teacher/dashboard'])
+          
+        }else{
+          this.errorMessage = res.message
+          console.log(res);
+          
+        }
         
       }
     })
+
+    setTimeout(() => {
+      this.errorMessage = ''
+    }, 3000);
   }
 
 }

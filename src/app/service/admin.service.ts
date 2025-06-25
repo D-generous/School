@@ -1,14 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
+import { UsersserviceService } from './usersservice.service';
+import { teacherInfo } from '../pages/parent/teacher.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
 
-  constructor(private http: HttpClient, private ngZone: NgZone, private router: Router) { }
+  constructor(private http: HttpClient, private ngZone: NgZone, private router: Router, private userService: UsersserviceService) { }
   private expireTimeOut?:any
+
+  
 
   
   adminSignIn(obj: {email: string, password: string}){
@@ -29,26 +33,26 @@ export class AdminService {
 
   }
 
-  decodeJwt(token: string): any {
-    try {
-      const payload = token.split('.')[1];
-      const json = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
-      return JSON.parse(decodeURIComponent(
-        json
-          .split('')
-          .map(c => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`)
-          .join('')
-      ));
-    } catch {
-      return null;
-    }
-  }
+  // decodeJwt(token: string): any {
+  //   try {
+  //     const payload = token.split('.')[1];
+  //     const json = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+  //     return JSON.parse(decodeURIComponent(
+  //       json
+  //         .split('')
+  //         .map(c => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`)
+  //         .join('')
+  //     ));
+  //   } catch {
+  //     return null;
+  //   }
+  // }
   
   startSessionTimeOut(onTimeOut: ()=> void){
     const token = this.getToken()
 
     if (token) {
-      const decoded = this.decodeJwt(token)
+      const decoded = this.userService.decodeJwt(token)
       const exp = decoded && decoded.exp * 1000
 
       if (exp && Date.now() < exp) {
@@ -73,7 +77,7 @@ export class AdminService {
     const token = this.getToken()
 
     if (token) {
-      const decoded = this.decodeJwt(token)
+      const decoded = this.userService.decodeJwt(token)
       const exp = decoded && decoded.exp * 1000
 
       return exp && Date.now() < exp
@@ -85,10 +89,7 @@ export class AdminService {
 
 
   fetchData(token: any) {
-    return this.http
-      .get('http://localhost/school/admin/dashboard.php', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+    return this.userService.fetchData('http://localhost/school/admin/dashboard.php', token)
 
     }
   

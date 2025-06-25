@@ -9,6 +9,7 @@ import {
 import { hasSameValue, mustContainSpecialCharacter } from '../../../form.model';
 import { UsersserviceService } from '../../../service/usersservice.service';
 import { Router } from '@angular/router';
+import { ParentService } from '../../../service/parent.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,7 +18,7 @@ import { Router } from '@angular/router';
   styleUrl: './sign-up.component.css',
 })
 export class SignUpComponent {
-  constructor(private parentService: UsersserviceService, private router: Router, private destroyRef: DestroyRef){}
+  constructor(private parentService: ParentService, private router: Router, private destroyRef: DestroyRef){}
 
   parentSignUpForm = new FormGroup({
     fname: new FormControl('', { validators: [Validators.required] }),
@@ -71,7 +72,7 @@ export class SignUpComponent {
     }
 
     const subscription = this.parentService.parentSignUp(obj).subscribe({
-      next: (res)=>{
+      next: (res:any)=>{
         console.log(res);
         
       }

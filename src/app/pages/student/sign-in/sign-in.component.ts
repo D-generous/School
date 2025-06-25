@@ -2,6 +2,7 @@ import { Component, DestroyRef } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { UsersserviceService } from '../../../service/usersservice.service';
 import { Router, RouterLink } from '@angular/router';
+import { StudentService } from '../../../service/student.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,7 +11,7 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './sign-in.component.css'
 })
 export class SignInComponent {
-  constructor(private studentService: UsersserviceService, private router: Router, private destroyRef: DestroyRef){}
+  constructor(private studentService: StudentService, private router: Router, private destroyRef: DestroyRef){}
 
   errorMessage = ''
 

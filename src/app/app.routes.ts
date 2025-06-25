@@ -14,6 +14,7 @@ import { PaymentComponent } from './pages/student/payment/payment.component';
 import { ResetPasswordComponent } from './pages/student/reset-password/reset-password.component';
 import { PasswordresetComponent } from './pages/student/passwordreset/passwordreset.component';
 import { SignInComponent as TeacherSignIn } from './pages/teacher/sign-in/sign-in.component';
+import { DashbboardComponent as teacherDash } from './pages/teacher/dashbboard/dashbboard.component';
 // import { DashbboardComponent as adminDash } from './pages/admin/dashboard/dashboard.component';
 
 export const routes: Routes = [
@@ -31,6 +32,7 @@ export const routes: Routes = [
 
     {path: 'teacher/signup', component:  TeacherSignUp},
     {path: 'teacher/signin', component:  TeacherSignIn},
+    {path: 'teacher/dashboard', component:  teacherDash},
     // {path: 'test', component: ErrorModalComponent}
 
     {path: 'admin/signin', component: adminSignIn},

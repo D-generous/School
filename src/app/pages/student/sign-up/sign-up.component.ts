@@ -45,7 +45,7 @@ import { UsersserviceService } from '../../../service/usersservice.service';
 export class SignUpComponent {
   showOption = false;
   constructor(
-    private studentService: UsersserviceService,
+    private studentService: StudentService,
     private router: Router,
     private destroyRef: DestroyRef
   ) {}

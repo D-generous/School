@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { PaymentService } from '../../../service/payment.service';
 import { HttpClient } from '@angular/common/http';
 import { UsersserviceService } from '../../../service/usersservice.service';
+import { StudentService } from '../../../service/student.service';
 
 @Component({
   selector: 'app-payment',
@@ -10,7 +11,7 @@ import { UsersserviceService } from '../../../service/usersservice.service';
   styleUrl: './payment.component.css'
 })
 export class PaymentComponent {
-  constructor(private paymentService: PaymentService, private studentService: UsersserviceService, public http:HttpClient) {}
+  constructor(private paymentService: PaymentService, private userService: UsersserviceService, private studentService: StudentService, public http:HttpClient) {}
 
   userdetails?: any = ''
   
@@ -18,7 +19,7 @@ export class PaymentComponent {
   currentAcademicYear:any = ''
 
   fetchcurrentAcademicYear(){
-    this.studentService.currentAcademicYear().subscribe({
+    this.userService.currentAcademicYear().subscribe({
       next: (res:any) =>{
         this.currentAcademicYear = res
         console.log(this.currentAcademicYear);
@@ -35,7 +36,7 @@ export class PaymentComponent {
         next: (res:any) => {
           console.log(res);
           
-          this.studentService.currentAcademicYear().subscribe({
+          this.userService.currentAcademicYear().subscribe({
             next: (result:any) =>{
               const academicyear = result
               

@@ -4,6 +4,7 @@ import { Component, HostListener } from '@angular/core';
 import { UsersserviceService } from '../../../service/usersservice.service';
 import { ErrorModalComponent } from '../../../shared/modal/error-modal/error-modal.component';
 import { PaymentComponent } from '../payment/payment.component';
+import { StudentService } from '../../../service/student.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,7 +24,9 @@ export class DashboardComponent {
 
   constructor(
     private http: HttpClient,
-    private studentService: UsersserviceService
+    private userService: UsersserviceService,
+    private studentService: StudentService
+
   ) {}
 
   // selectedFile = ''
@@ -108,7 +111,7 @@ export class DashboardComponent {
 
   currentAcademicYear: any = '';
   fetchcurrentAcademicYear() {
-    this.studentService.currentAcademicYear().subscribe({
+    this.userService.currentAcademicYear().subscribe({
       next: (res: any) => {
         console.log(res);
 
